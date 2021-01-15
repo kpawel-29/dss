@@ -31,6 +31,13 @@ import eu.europa.esig.dss.ws.signature.dto.ExtendDocumentDTO;
 import eu.europa.esig.dss.ws.signature.dto.SignOneDocumentDTO;
 import eu.europa.esig.dss.ws.signature.dto.TimestampOneDocumentDTO;
 import eu.europa.esig.dss.ws.signature.rest.client.RestDocumentSignatureService;
+import eu.europa.esig.dss.service.http.commons.TimestampDataLoader;
+import eu.europa.esig.dss.service.tsp.OnlineTSPSource;
+import eu.europa.esig.dss.spi.x509.tsp.CompositeTSPSource;
+import eu.europa.esig.dss.spi.x509.tsp.TSPSource;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * REST implementation of the remote signature service
@@ -62,7 +69,22 @@ public class RestDocumentSignatureServiceImpl extends AbstractRemoteSignatureSer
 
 	@Override
 	public RemoteDocument extendDocument(ExtendDocumentDTO extendDocumentDto) {
-		return service.extendDocument(extendDocumentDto.getToExtendDocument(), extendDocumentDto.getParameters());
+		return service.extendDocument(extendDocumentDto.getToExtendDocument(), extendDocumentDto.getParameters(), createTSPSource(extendDocumentDto.getParameters().getTspSource()));
+	}
+
+	private TSPSource createTSPSource(String source) {
+		TimestampDataLoader timestampDataLoader = new TimestampDataLoader();
+
+		OnlineTSPSource tsa1 = new OnlineTSPSource(source);
+		tsa1.setDataLoader(timestampDataLoader);
+
+		Map<String, TSPSource> tspSources = new HashMap<>();
+		tspSources.put("TSA1", tsa1);
+
+		CompositeTSPSource tspSource = new CompositeTSPSource();
+		tspSource.setTspSources(tspSources);
+
+		return tspSource;
 	}
 
 	@Override

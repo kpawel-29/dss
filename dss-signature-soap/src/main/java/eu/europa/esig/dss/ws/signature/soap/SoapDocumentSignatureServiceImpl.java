@@ -61,7 +61,7 @@ public class SoapDocumentSignatureServiceImpl implements SoapDocumentSignatureSe
 
 	@Override
 	public RemoteDocument extendDocument(ExtendDocumentDTO extendDocumentDto) {
-		return service.extendDocument(extendDocumentDto.getToExtendDocument(), extendDocumentDto.getParameters());
+		return service.extendDocument(extendDocumentDto.getToExtendDocument(), extendDocumentDto.getParameters(), null);
 	}
 
 	@Override

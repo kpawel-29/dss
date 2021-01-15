@@ -46,6 +46,7 @@ import eu.europa.esig.dss.ws.signature.dto.parameters.RemoteTimestampParameters;
 import eu.europa.esig.dss.xades.signature.XAdESService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import eu.europa.esig.dss.spi.x509.tsp.TSPSource;
 
 import java.util.Objects;
 
@@ -233,13 +234,15 @@ public class RemoteDocumentSignatureServiceImpl extends AbstractRemoteSignatureS
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public RemoteDocument extendDocument(RemoteDocument remoteDocument, RemoteSignatureParameters remoteParameters) {
+	public RemoteDocument extendDocument(RemoteDocument remoteDocument, RemoteSignatureParameters remoteParameters, TSPSource tspSource) {
 		Objects.requireNonNull(remoteDocument, "remoteDocument must be defined!");
 		Objects.requireNonNull(remoteParameters, "remoteParameters must be defined!");
 		Objects.requireNonNull(remoteParameters.getSignatureLevel(), "signatureLevel must be defined!");
+		Objects.requireNonNull(remoteParameters.getTspSource(), "tspSource must be defined!");
 		LOG.info("ExtendDocument in process...");
 		SerializableSignatureParameters parameters = createParameters(remoteParameters);
 		DocumentSignatureService service = getServiceForSignature(remoteParameters.getSignatureLevel().getSignatureForm(), remoteParameters.getAsicContainerType());
+		service.setTspSource(tspSource);
 		DSSDocument dssDocument = RemoteDocumentConverter.toDSSDocument(remoteDocument);
 		DSSDocument extendDocument = service.extendDocument(dssDocument, parameters);
 		LOG.info("ExtendDocument is finished");

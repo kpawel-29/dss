@@ -209,6 +209,8 @@ public abstract class AbstractRemoteSignatureServiceImpl {
 		if (Utils.isCollectionNotEmpty(remoteCertificateChain)) {
 			parameters.setCertificateChain(RemoteCertificateConverter.toCertificateTokens(remoteCertificateChain));
 		}
+
+		parameters.setTspSource(remoteParameters.getTspSource());
 	}
 	
 	private BLevelParameters toBLevelParameters(RemoteBLevelParameters remoteBLevelParameters) {

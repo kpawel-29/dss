@@ -43,6 +43,8 @@ public abstract class AbstractSignatureParameters<TP extends SerializableTimesta
 	 */
 	protected String deterministicId;
 
+	private String tspSource;
+
 	/**
 	 * The documents to be signed
 	 */
@@ -127,6 +129,14 @@ public abstract class AbstractSignatureParameters<TP extends SerializableTimesta
 	 */
 	public void setDetachedContents(final List<DSSDocument> detachedContents) {
 		this.detachedContents = detachedContents;
+	}
+
+	public String getTspSource() {
+		return tspSource;
+	}
+
+	public void setTspSource(String tspSource) {
+		this.tspSource = tspSource;
 	}
 
 	/**

@@ -26,6 +26,7 @@ import eu.europa.esig.dss.ws.dto.SignatureValueDTO;
 import eu.europa.esig.dss.ws.dto.ToBeSignedDTO;
 import eu.europa.esig.dss.ws.signature.dto.parameters.RemoteSignatureParameters;
 import eu.europa.esig.dss.ws.signature.dto.parameters.RemoteTimestampParameters;
+import eu.europa.esig.dss.spi.x509.tsp.TSPSource;
 
 import java.io.Serializable;
 
@@ -90,11 +91,12 @@ public interface RemoteDocumentSignatureService extends Serializable {
 	 *            document to extend
 	 * @param parameters
 	 *            set of the driving signing parameters
+	 * @param tspSource
 	 * @return the extended signature
 	 * @throws DSSException
 	 *             if an error occurred
 	 */
-	RemoteDocument extendDocument(final RemoteDocument toExtendDocument, final RemoteSignatureParameters parameters) throws DSSException;
+	RemoteDocument extendDocument(final RemoteDocument toExtendDocument, final RemoteSignatureParameters parameters, TSPSource tspSource) throws DSSException;
 	
 	/**
 	 * Adds a timestamp to the document

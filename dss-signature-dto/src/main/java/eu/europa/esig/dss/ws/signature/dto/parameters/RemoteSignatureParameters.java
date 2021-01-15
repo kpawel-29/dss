@@ -141,6 +141,11 @@ public class RemoteSignatureParameters implements Serializable {
 	private RemoteSignatureImageParameters imageParameters;
 	
 	/**
+	 * TSP Source URL
+	 */
+	private String tspSource;
+	
+	/**
 	 * This variable defines an Id of a signature to be counter-signed
 	 * Used only for {@code getDataToBeCounterSigned()} and {@code counterSignSignature()} methods
 	 */
@@ -149,6 +154,14 @@ public class RemoteSignatureParameters implements Serializable {
 	public RemoteSignatureParameters() {
 	}
 
+	public String getTspSource() {
+		return tspSource;
+	}
+	
+	public void setTspSource(String tspSource) {
+		this.tspSource = tspSource;
+	}
+	
 	public RemoteCertificate getSigningCertificate() {
 		return signingCertificate;
 	}
